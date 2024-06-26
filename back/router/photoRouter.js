@@ -9,7 +9,7 @@ const photoController = require("../controllers/photoController");
 const tokenAuthenticator = require("../middlewares/tokenAuthenticator");
 // importo i mid di validazione
 const validator = require("../middlewares/validator");
-const { slugChecker, bodyChecker } = require("../validations/posts");
+const { slugChecker, bodyChecker } = require("../validations/photos");
 // importo il mid per la gestione dei multipart form data
 const multer = require("multer");
 // setto multer affinchè ciò che viene inviato venga storato in public

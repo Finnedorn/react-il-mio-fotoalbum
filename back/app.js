@@ -8,11 +8,10 @@ const cors = require("cors");
 // importo i router per settare le routes del server
 const photoRouter = require("./router/photoRouter");
 const authRouter = require("./router/authRouter");
+const categoryRouter = require("./router/categoryRouter");
 // importo i mid di gestione errori
 const notFoundFormatter = require("./middlewares/404errorFormatter");
 const allErrorFormatter = require("./middlewares/allErrorFormatter");
-// importo il mid di seeding delle categorie
-const categorySeeder = require("./seeder/categorySeeder");
 // abilito le chiamate provenienti da altri indirizzi
 app.use(cors({}));
 // abilito il mid per l'utilizzo della cartella public
@@ -24,11 +23,13 @@ app.use(express.json());
 // abilito le routes del server
 
 
-app.use(categorySeeder);
+// attivo i mid seeder per popolare il db
 
 app.use("/auth", authRouter);
 
 app.use("/photos", photoRouter);
+
+app.use("/categories", categoryRouter);
 
 
 

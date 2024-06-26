@@ -4,19 +4,19 @@ const categoryController = require("../controllers/categoryController");
 const validator = require("../middlewares/validator");
 const { idChecker, nameChecker } = require("../validations/categories");
 
-router.post("/", validator(nameChecker), tagController.store);
+router.post("/", validator(nameChecker), categoryController.store);
 
-router.get("/", tagController.index);
+router.get("/", categoryController.index);
 
-router.get("/:id", validator(idChecker), tagController.show);
+router.get("/:id", validator(idChecker), categoryController.show);
 
 router.put(
   "/:id",
   validator(idChecker),
   validator(nameChecker),
-  tagController.update
+  categoryController.update
 );
 
-router.delete("/:id", validator(idChecker), tagController.destroy);
+router.delete("/:id", validator(idChecker), categoryController.destroy);
 
 module.exports = router;

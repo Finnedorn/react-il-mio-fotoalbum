@@ -1,3 +1,7 @@
+// importo ed inizializzo prisma
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 // seeder che popolerà il db con elementi presi da un array
 // lo sfrutto come un middleware e lo faccio partire all'avvio del server 1 volta
 const categorySeeder = async () => {
@@ -45,7 +49,14 @@ const categorySeeder = async () => {
     console.log("Creazione delle categorie completata.");
   } catch (error) {
     console.error("Errore durante la creazione delle categorie:", error);
+  } finally {
+    await prisma.$disconnect();
   }
 };
 
-module.exports = categorySeeder;
+
+categorySeeder();
+
+
+// quindi passo sul package json per settare il comando di attivazione...
+
