@@ -11,6 +11,8 @@ const authRouter = require("./router/authRouter");
 // importo i mid di gestione errori
 const notFoundFormatter = require("./middlewares/404errorFormatter");
 const allErrorFormatter = require("./middlewares/allErrorFormatter");
+// importo il mid di seeding delle categorie
+const categorySeeder = require("./seeder/categorySeeder");
 // abilito le chiamate provenienti da altri indirizzi
 app.use(cors({}));
 // abilito il mid per l'utilizzo della cartella public
@@ -21,6 +23,8 @@ app.use(express.json());
 
 // abilito le routes del server
 
+
+app.use(categorySeeder);
 
 app.use("/auth", authRouter);
 
