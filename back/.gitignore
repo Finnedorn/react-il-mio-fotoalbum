@@ -1,0 +1,4 @@
+node_modules
+# elmino dal pacchetto degli elementi da pushare le variabili ambientali 
+.env
+.vs_code
