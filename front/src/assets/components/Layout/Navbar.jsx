@@ -10,8 +10,8 @@ function Navbar() {
       path: "/",
     },
     {
-      label: "Posts",
-      path: "/posts",
+      label: "Photos",
+      path: "/photos",
     },
   ];
 

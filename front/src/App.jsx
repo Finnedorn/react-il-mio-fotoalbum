@@ -48,10 +48,6 @@ function App() {
               >
                 <Route path="photos">
                   <Route index element={<PhotoIndex />} />
-                  <Route path=":id">
-                    {/* rotta show versione privata */}
-                    <Route index element={<PhotoShow />} />
-                  </Route>
                   <Route path="create" element={<PhotoCreate />} />
                 </Route>
               </Route>
