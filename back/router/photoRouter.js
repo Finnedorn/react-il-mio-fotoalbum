@@ -5,8 +5,6 @@ const router = express.Router();
 const path = require("path");
 // importo il controller con le funzioni di CRUD
 const photoController = require("../controllers/photoController");
-// importo il mid di token autenticazione
-const tokenAuthenticator = require("../middlewares/tokenAuthenticator");
 // importo i mid di validazione
 const validator = require("../middlewares/validator");
 const { slugChecker, bodyChecker } = require("../validations/photos");
@@ -38,13 +36,6 @@ router.get("/", photoController.index);
 
 // route al singolo elemento
 router.get("/:slug", validator(slugChecker), photoController.show);
-
-
-
-// piazzo il mid di autenticazione in questo modo
-// così da proteggere tutte le rotte da questa in poi 
-router.use(tokenAuthenticator);
-
 
 // route di caricamento photo
 router.post(

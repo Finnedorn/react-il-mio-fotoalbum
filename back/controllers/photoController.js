@@ -119,6 +119,7 @@ const index = async (req, res, next) => {
         },
         categories: {
           select: {
+            id: true,
             name: true,
           },
         },
@@ -154,6 +155,7 @@ const show = async (req, res, next) => {
         },
         category: {
           select: {
+            id: true,
             name: true,
           },
         },
