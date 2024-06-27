@@ -9,7 +9,7 @@ const apiUrl = import.meta.env.VITE_BASE_API_URL;
 const PhotoContext = createContext();
 
 
-// genero il provider che effettuerà la chiamata axios ed accoglierà i valori di Post dal db
+// genero il provider che effettuerà la chiamata axios ed accoglierà i valori delle Photo dal db
 // esso ha un prop ovvero tutte le rotte in cui sono presenti le componenti 
 // con cui voglio condividere i dati dal provider stesso
 const PhotoProvider = ({ children }) => {
@@ -36,9 +36,9 @@ const PhotoProvider = ({ children }) => {
   return (
   <>
     {/* do al value del provider il contenuto di posts */}
-    <PostContext.Provider value={{photos}}>
+    <PhotoContext.Provider value={{photos}}>
         {children}
-    </PostContext.Provider>
+    </PhotoContext.Provider>
   </>
   );
 };

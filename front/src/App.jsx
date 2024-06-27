@@ -32,8 +32,9 @@ function App() {
                 {/* Rotte pubbliche */}
                 <Route path="*" element={<NotFound />} />
                 <Route index element={<Home />} />
-                <Route path="register" element={<Register />} />
                 <Route path="login" element={<Login />} />
+                {/* rotta show versione pubblica */}
+                <Route path="photos/:id" element={<PhotoShow />} />
               </Route>
 
               {/* Rotte protette dal middleware di autenticazione */}
@@ -48,6 +49,7 @@ function App() {
                 <Route path="photos">
                   <Route index element={<PhotoIndex />} />
                   <Route path=":id">
+                    {/* rotta show versione privata */}
                     <Route index element={<PhotoShow />} />
                   </Route>
                   <Route path="create" element={<PhotoCreate />} />

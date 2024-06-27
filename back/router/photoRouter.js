@@ -33,9 +33,18 @@ const upload = multer({ storage });
 
 
 
+// route agli elementi
+router.get("/", photoController.index);
+
+// route al singolo elemento
+router.get("/:slug", validator(slugChecker), photoController.show);
+
+
+
 // piazzo il mid di autenticazione in questo modo
-// così da proteggere tutte le rotte 
+// così da proteggere tutte le rotte da questa in poi 
 router.use(tokenAuthenticator);
+
 
 // route di caricamento photo
 router.post(
@@ -46,12 +55,6 @@ router.post(
   validator(bodyChecker),
   photoController.store
 );
-
-// route agli elementi
-router.get("/", validator(slugChecker), photoController.index);
-
-// route al singolo elemento
-router.get("/:slug", validator(slugChecker), photoController.show);
 
 // route update di un elemento
 router.put(

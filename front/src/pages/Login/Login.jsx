@@ -76,7 +76,7 @@ const Login = () => {
                 Login
               </button>
             </form>
-            <div className="d-flex justify-content-center pt-4">
+            {/* <div className="d-flex justify-content-center pt-4">
               <h4>
                 Non hai un account?
                 <NavLink
@@ -87,7 +87,7 @@ const Login = () => {
                   Registrati
                 </NavLink>
               </h4>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

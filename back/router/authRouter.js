@@ -4,7 +4,6 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const validator = require("../middlewares/validator");
 const {registerChecker,loginChecker} = require("../validations/auths");
-const tokenAuthenticator = require("../middlewares/tokenAuthenticator");
 
 // imposto le routes
 
@@ -13,7 +12,7 @@ const tokenAuthenticator = require("../middlewares/tokenAuthenticator");
 router.post("/register", validator(registerChecker), authController.register);
 
 // per il login
-router.post("/login", tokenAuthenticator, validator(loginChecker), authController.login);
+router.post("/login", validator(loginChecker), authController.login);
 
 
 module.exports = router;

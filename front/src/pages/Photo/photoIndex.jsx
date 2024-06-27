@@ -1,7 +1,7 @@
-// import CardComponent from "../../assets/components/Card/CardComponent";
+import CardComponent from "../../assets/components/Card/CardComponent";
 import { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { usePhotos } from "../../contexts/photoContext";
+import { usePhotos } from "../../contexts/PhotoContext";
 
 
 const PhotoIndex = () => {
