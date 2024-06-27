@@ -187,6 +187,8 @@ const update = async (req, res, next) => {
     // tutti gli elementi nel loro formato adatto alla validazione prima di inviarli al db
     const updateData = {
       title,
+      // aggiorno pure lo slug col titolo nuovo
+      slug: await createUniqueSlug(title),
       description,
       visible: visible === "true" ? true : false,
       categories: {
@@ -194,14 +196,13 @@ const update = async (req, res, next) => {
       },
     };
 
+
     // gestisco il file img in caso di modifica dell'immagine
+    // se esistente, elimino la vecchia img e percorso relativo
     if (req.file) {
-      // se esistente, elimino la vecchia img e percorso relativo
-      if (photo.image) {
-        photoImgDeleter(photo.image);
-      }
+      photoImgDeleter(req.file);
       // e la sostituisco con il nuovo percorso
-      storeData.image = `http://localhost:${port}/photoFolder/${req.file.filename}`;
+      updateData.image = `http://localhost:${port}/photoFolder/${req.file.filename}`;
     }
 
     // carico tutto in db effettuando un update dei valori

@@ -56,6 +56,7 @@ router.get("/:slug", validator(slugChecker), photoController.show);
 // route update di un elemento
 router.put(
   "/:slug",
+  upload.single("image"),
   validator(slugChecker),
   validator(bodyChecker),
   photoController.update

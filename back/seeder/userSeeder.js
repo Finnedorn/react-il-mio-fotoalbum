@@ -3,17 +3,17 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // importo i moduli relativi alle password ed ai token
-const { passwordHusher } = require("../utils/pswAndToken");
+const { passwordHusher, tokenGenerator } = require("../utils/pswAndToken");
 
 // seeder che popolerà il db con elementi presi da un array
 const userSeeder = async () => {
   try {
     const users = [
       {
-        name: "User01",
-        email: "user01@example.it",
-        password: "User123",
-      }
+        name: "Daniele",
+        email: "daniele@example.com",
+        password: "Daniele123",
+      },
     ];
     // itero sull'array con ciclo for
     for (let user of users) {
@@ -25,7 +25,19 @@ const userSeeder = async () => {
           password: await passwordHusher(user.password),
         },
       });
-      console.log(`User "${user.name}" registrato con successo.`);
+
+      const data = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      };
+      const token = tokenGenerator(data);
+
+      console.log({
+        message: "Registrazione Avvenuta con successo",
+        token: token,
+        data,
+      });
     }
     console.log("Registrazione utenti completata.");
   } catch (error) {
@@ -34,7 +46,6 @@ const userSeeder = async () => {
     await prisma.$disconnect();
   }
 };
-
 
 userSeeder();
 
