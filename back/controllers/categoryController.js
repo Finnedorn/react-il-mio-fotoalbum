@@ -31,8 +31,8 @@ const store = async (req, res, next) => {
 const index = async (req, res) => {
   try {
     // richiamo tutti gli elementi dal db
-    const categorys = await prisma.category.findMany();
-    res.json(categorys);
+    const categories = await prisma.category.findMany();
+    res.json(categories);
   } catch (err) {
     const errorFormatter = new RestErrorFormatter(
       404,

@@ -1,5 +1,6 @@
+// inizializzo express
 const express = require("express");
-// importo il modulo per la gestione delle routes
+// uso il metodo router di express per creare un nuovo oggetto router
 const router = express.Router();
 // importo il modulo per i percorso file
 const path = require("path");
@@ -25,10 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-
-
 // setto le rotte di /photos
-
 
 
 // route agli elementi
@@ -59,4 +57,6 @@ router.put(
 // route di delete di un elemento
 router.delete("/:slug", validator(slugChecker), photoController.destroy);
 
+
+// esporto il modulo per poterlo importare in app
 module.exports = router;

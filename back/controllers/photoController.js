@@ -31,6 +31,9 @@ const createUniqueSlug = async (title) => {
 const photoImgDeleter = (file) => {
   try {
     // elaboro il path del file dell'img che voglio eliminare
+    // dirname e' la variabile globale di nodejs che contiene
+    // il nome della directory in cui si trova lo script attualmente in esecuzione
+    // e' utile per costruire percorsi relativi ai file 
     const filePath = path.join(__dirname, "../public/photoFolder/" + file);
     // elimino l'elemento traminte la funzione unlinkSync
     fs.unlinkSync(filePath);
@@ -41,31 +44,40 @@ const photoImgDeleter = (file) => {
 
 // funzione di creazione di un elemento in db
 const store = async (req, res, next) => {
+  // estraggo gli elementi dalla req tramite destructurizing
   const { title, description, visible, categories, userId } = req.body;
   try {
+    // creo un pacchetto dati in cui mi assicuro di convertire i value nel formato giusto
+    // questo perche' in caso di invio di un file multipartformdata, ogni valore che mi arriva sara' una string 
     const storeData = {
       title,
+      // creo uno slug univoco dal title
       slug: await createUniqueSlug(title),
       description,
+      // trasformo visible in un booleano
       visible: visible === "true" ? true : false,
+      // trasformo il valore di id in numerico
       userId: parseInt(userId),
+      // connect e' una dicitura di prisma usata per creare una relazione
+      // mi assicuro che il valore di id sia di tipo numerico
       categories: {
         connect: categories.map((category) => ({ id: parseInt(category) })),
       },
     };
 
-    // ricevendo un elemento multipart form-data dove immagine viene inserita in uan sezione differente dal body
+    // ricevendo un elemento multipart form-data dove immagine viene inserita in una sezione differente dal body
     // vado a ricercarmelo nel pacchetto req.file e genero il link da inviare al db per il recupero file
     if (req.file) {
       storeData.image = `http://localhost:${port}/photoFolder/${req.file.filename}`;
     }
 
-    // invio tutto al db
+    // creo l'elemento in db con prisma
     const photo = await prisma.photo.create({
       data: storeData,
     });
-
+    // invio un feedback di avvenuta procedura + un json con i dati inviati al db
     res.send(`Photo caricata con successo: ${JSON.stringify(photo, null, 2)}`);
+
   } catch (error) {
     // se il processo non va a buon fine elimino l'immagine
     photoImgDeleter(req.file.filename);

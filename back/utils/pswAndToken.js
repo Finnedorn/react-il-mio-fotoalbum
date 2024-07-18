@@ -22,7 +22,7 @@ const tokenGenerator = (payload, expiresIn = '2h') => {
 // funzione che si occupa del cryptaggio della password
 const passwordHusher = async(password) => {
     // la funzione hash, nativa di jwt, accetta 2 parametri:
-    // (l'elemento da crypare in questo caso la psw utente,
+    // (l'elemento da cryptare in questo caso la psw utente,
     // e il salt ovvero il livello di cryptaggio che vogliamo dare)
     const hushed = await bcrypt.hash(password, 10);
     return hushed;
