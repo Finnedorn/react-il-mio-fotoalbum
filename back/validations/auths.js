@@ -1,12 +1,18 @@
+// modulo in cui settero le funzioni di checkschema da dare al validator
+
+// import prisma per poter effettuare le operazioni di controllo sugli elementi 
+// confrontandogli con gli elementi gia presenti in db
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // checkSchema per la registrazione 
 const registerChecker = {
     email: {
+        // specifico dove trovare il valore
         in:["body"],
         notEmpty: {
             errorMessage: "Email è un campo obbligatorio.",
+            // bail e un opzione che se fallisce (false) mi impedisce di proseguire con le validazioni
             bail: true,
         },
         isEmail: {
@@ -16,11 +22,13 @@ const registerChecker = {
         // ricerco tra le mail già presenti in db se vi è già una mail identica
         custom: {
             options: async (mail) => {
+                // uso la funione findFirst di prisma per ricercare il primo elemento in db che matcha con le caratteristiche da me inserite 
                 const mailToFind = await prisma.user.findFirst({
                   where: {
                     email: mail,
                   },
                 });
+                // se mailtoFind mi da true significa che ho gia un amail del genere in db pertanto...
                 if (mailToFind) {
                   throw new Error("Questa Email è già stata registrata!");
                 }
@@ -55,6 +63,7 @@ const registerChecker = {
 };
 
 // checkSchema per la registrazione
+// avendo l'utente gia fatto la pratica di registrazione, controllero solo mail e psw
 const loginChecker = {
     email: {
         in:["body"],

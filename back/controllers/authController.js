@@ -13,14 +13,17 @@ const {
 
 // funzione di registrazione utente
 const register = async (req, res, next) => {
-    // estraggo i valori dallla request
+    // estraggo i valori dalla request tramite destructuring
     const {email, name , password} = req.body;
     try{
-        // creo l'elemento in db
+        // creo l'elemento in db usando la funzione create di prisma
         const user = await prisma.user.create({
             data: {
                 email,
                 name, 
+                // essendo la funzione che regola la creazione dell'elemento asyncrona
+                // pure tutte le funzioni che si attuano all'interno di essa devono esserlo
+                // altrimenti queste partiranno prima di essa stessa
                 password: await passwordHusher(password)
             }
         });
@@ -34,6 +37,7 @@ const register = async (req, res, next) => {
         }
         const token = tokenGenerator(data);
 
+        // ritorno un json con un mes di feedback, il token generato ed i dati inviati
         res.json({
             message: "Registrazione Avvenuta con successo",
             token: token,
@@ -41,10 +45,13 @@ const register = async (req, res, next) => {
         });
 
     }catch(error){
+        // in caso di errore, apro una nuova istanza di RestErrorFormatter in cui inseriro codice e mes
         const errorFormatter = new RestErrorFormatter(
             404,
             `Errore nel processo di registrazione: ${error}`
         );
+        // tramite next(nome della const da inviare) invio tutto ai mid successivi 
+        // in linea di ordine capaci di accogliere l'errore ovvero il mid allErrorFormatter
         next(errorFormatter); 
     }
 };
@@ -59,7 +66,7 @@ const login = async (req, res, next) => {
                 email
             }
         });
-
+        // in caso di mail non corrispondente a quelle gia' presenti in db
         if(!user){
             const errorFormatter = new RestErrorFormatter(
                 400,
@@ -67,9 +74,9 @@ const login = async (req, res, next) => {
             );
             next(errorFormatter);
         }
-
+        // faccio un confronto tra la psw della req e quella dell'utente registrato in db
         const isValid = await passwordComparer(password, user.password);
-
+        // in caso non corrisponda, mando un messaggio di errore 
         if(!isValid){
             const errorFormatter = new RestErrorFormatter(
                 400,
@@ -77,15 +84,15 @@ const login = async (req, res, next) => {
             );
             next(errorFormatter);
         } 
-
+        // se entrambi i controlli (email e psw) vanno a buon fine creo un pacchetto coi dati utente presi dal db
         const data = {
             id: user.id,
             email: user.email,
             name: user.name
         }
-
+        // genero il token 
         const token = tokenGenerator(data);
-
+        // riporto un feedback positivo, aggiungo il token ed i dati dell'utente
         res.json({
             message: "Login Avvenuto con successo",
             token,

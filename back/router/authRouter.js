@@ -15,4 +15,5 @@ router.post("/register", validator(registerChecker), authController.register);
 router.post("/login", validator(loginChecker), authController.login);
 
 
+// esporto il modulo per poterlo importare in app
 module.exports = router;
