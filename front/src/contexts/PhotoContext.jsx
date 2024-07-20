@@ -1,3 +1,4 @@
+// importo axios
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 const apiUrl = import.meta.env.VITE_BASE_API_URL;
@@ -35,9 +36,9 @@ const PhotoProvider = ({ children }) => {
 
   return (
   <>
-    {/* do al value del provider il contenuto di posts */}
+    {/* do al value del provider il contenuto di photos */}
     <PhotoContext.Provider value={{photos}}>
-        {children}
+      {children}
     </PhotoContext.Provider>
   </>
   );
@@ -45,12 +46,12 @@ const PhotoProvider = ({ children }) => {
 
 // creo la mia funzione di hook personalizzata in cui esporto il valore del context corrente
 const usePhotos = () => {
-  // prendo il valore di posts dal context con useContext 
+  // prendo il valore di photos dal context con useContext 
   const value = useContext(PhotoContext);
   //se non sono in un consumer del GlobalContext.Provider, value sarà undefined
   // perciò creo una condizione che generi un errore per segnalarmelo
   if(value === undefined){
-      throw new Error('Non sei dentro al Photo Provider');
+    throw new Error('Non sei dentro al Photo Provider');
   }
   return value;
 }

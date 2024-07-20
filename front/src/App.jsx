@@ -1,3 +1,4 @@
+// importo i componenti di react router-dom per la creazione di un sistema di routing
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // importo i layout
 import Layout from "./assets/components/Layout/Layout";
@@ -9,8 +10,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import LogChecker from "./middlewares/logChecker";
 // importo la pagina di login
 import Login from "./pages/Login/Login";
-// importo la pagina di register
-import Register from "./pages/Register/Register";
 
 // import le rotte alle varie pagine
 import Home from "./pages/Home/Home";
@@ -23,8 +22,13 @@ import PhotoCreate from "./pages/Photo/photoCreate";
 function App() {
   return (
     <div className="App">
+      {/* browserRouter e' un componente originario di router-dom e 
+      funge da base per definire le varie route attraverso i tag Routes */}
       <BrowserRouter>
+        {/* photoProvider e' un provider personalizzato che sharera 
+        il contenuto della chiamata photos con tutte le routes al suo interno */}
         <PhotoProvider>
+          {/* l'authprovider si occupera di capire se l'utente ha effettuato o no il login */}
           <AuthProvider>
             <Routes>
               {/* Estensione del layout "nav + footer" a tutte le pagine */}

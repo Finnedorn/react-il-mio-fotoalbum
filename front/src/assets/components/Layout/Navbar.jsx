@@ -31,7 +31,7 @@ function Navbar() {
                 {navPages.map((page, index) => (
                   <li key={index} className="nav-item fs-3 p-2">
                     {/* il componente NavLink è simile al componente Link,
-                                quindi fronisce la possibilità di navigare attraverso le pagine,
+                                quindi fornisce la possibilità di navigare attraverso le pagine,
                                  ma in questo caso applica al link attivo la classe .active */}
                     <NavLink
                       to={page.path}
@@ -54,7 +54,10 @@ function Navbar() {
                     style={{ cursor: "pointer" }}
                     className=" nav-item fs-3 p-2 text-light"
                   >
-                    <span className=" nav-link active text-light" aria-current="page">
+                    <span
+                      className=" nav-link active text-light"
+                      aria-current="page"
+                    >
                       Logout
                     </span>
                   </li>
