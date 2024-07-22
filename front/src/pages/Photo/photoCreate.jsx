@@ -34,9 +34,11 @@ const PhotoCreate = () => {
         <Link to="../" relative="path">
           Back to the Main page
         </Link>
-        <CreatePhotoForm
-          categoriesData={categories}
-        />
+        { categories !== null && 
+          <CreatePhotoForm
+            categoriesData={categories}
+          />
+        }
       </div>
     </>
   );
